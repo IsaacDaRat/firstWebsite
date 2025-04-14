@@ -1,6 +1,7 @@
 const cells = document.querySelectorAll('[data-cell]');
 const board = document.getElementById('board');
 const resetButton = document.getElementById('resetButton');
+const gameStatus = document.getElementById('gameStatus');
 let currentPlayer = 'X';
 let gameActive = true;
 
@@ -17,14 +18,15 @@ function handleCellClick(e) {
 
     // Check for a winner
     if (checkWin()) {
-        alert(`${currentPlayer} wins!`);
+        gameStatus.textContent = `${currentPlayer} wins! 🎉`;
         gameActive = false;
     } else if (isBoardFull()) {
-        alert('It\'s a draw!');
+        gameStatus.textContent = 'It\'s a draw! 🤝';
         gameActive = false;
     } else {
         // Switch player
         currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+        gameStatus.textContent = `Player ${currentPlayer}'s turn`;
     }
 }
 
@@ -54,6 +56,7 @@ function resetGame() {
     cells.forEach(cell => cell.textContent = '');
     currentPlayer = 'X';
     gameActive = true;
+    gameStatus.textContent = `Player ${currentPlayer}'s turn`;
 }
 
 // Attach event listener to each cell
@@ -61,3 +64,6 @@ cells.forEach(cell => cell.addEventListener('click', handleCellClick));
 
 // Reset button event listener
 resetButton.addEventListener('click', resetGame);
+
+// Set initial game status
+gameStatus.textContent = `Player ${currentPlayer}'s turn`;
